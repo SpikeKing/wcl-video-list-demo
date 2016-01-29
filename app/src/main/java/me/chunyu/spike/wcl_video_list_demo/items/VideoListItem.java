@@ -27,7 +27,7 @@ import me.chunyu.spike.wcl_video_list_demo.lists.VideoListAdapter;
  */
 public class VideoListItem implements VideoItem, ListItem {
 
-    private final Rect mCurrentViewRect; // 当前视图的方框
+    private final Rect mCurrentViewRect = new Rect(); // 当前视图的方框
     private final VideoPlayerManager<MetaData> mVideoPlayerManager; // 视频播放管理器
 
     private final String mTitle; // 标题
@@ -49,8 +49,6 @@ public class VideoListItem implements VideoItem, ListItem {
         mAssetFileDescriptor = assetFileDescriptor;
         mImageLoader = imageLoader;
         mImageResource = imageResource;
-
-        mCurrentViewRect = new Rect();
     }
 
     public void update(int position, final VideoListAdapter.VideoViewHolder viewHolder, VideoPlayerManager videoPlayerManager) {
@@ -96,7 +94,8 @@ public class VideoListItem implements VideoItem, ListItem {
 
     @Override
     public void playNewVideo(MetaData currentItemMetaData, VideoPlayerView player, VideoPlayerManager<MetaData> videoPlayerManager) {
-        videoPlayerManager.playNewVideo(currentItemMetaData, player, mAssetFileDescriptor);
+        String url = "http://dn-chunyu.qbox.me/fwb/static/images/home/video/video_aboutCY_A.mp4";
+        videoPlayerManager.playNewVideo(currentItemMetaData, player, url);
     }
 
     @Override public void stopPlayback(VideoPlayerManager videoPlayerManager) {
@@ -119,6 +118,11 @@ public class VideoListItem implements VideoItem, ListItem {
     // 底部出现
     private boolean viewIsPartiallyHiddenBottom(int height) {
         return mCurrentViewRect.bottom > 0 && mCurrentViewRect.bottom < height;
+    }
+
+    @Override
+    public String toString() {
+        return getClass() + ", mTitle[" + mTitle + "]";
     }
 
     public static View createView(ViewGroup parent, int screenWidth) {

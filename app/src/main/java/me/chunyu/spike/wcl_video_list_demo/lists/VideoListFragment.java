@@ -38,39 +38,29 @@ import me.chunyu.spike.wcl_video_list_demo.items.VideoListItem;
 public class VideoListFragment extends Fragment {
 
     private static final String[] NAMES = new String[]{
-            "video_sample_1.mp4",
-            "video_sample_2.mp4",
-            "video_sample_3.mp4",
-            "video_sample_4.mp4"
+            "chunyu-1.mp4",
+            "chunyu-2.mp4",
+            "chunyu-3.mp4",
+            "chunyu-4.mp4"
     };
 
     @Bind(R.id.video_list_rv_list) RecyclerView mRvList; // 列表视图
 
-    private final ArrayList<VideoListItem> mList; // 视频项的列表
-    private final ListItemsVisibilityCalculator mVisibilityCalculator; // 可视估计器
+    private final ArrayList<VideoListItem> mList = new ArrayList<>(); // 视频项的列表
+    private final ListItemsVisibilityCalculator mVisibilityCalculator =
+            new SingleListViewItemActiveCalculator(new DefaultSingleItemCalculatorCallback(), mList); // 可视估计器
 
     private LinearLayoutManager mLayoutManager; // 布局管理器
     private ItemsPositionGetter mItemsPositionGetter; // 位置提取器
 
-    private final VideoPlayerManager<MetaData> mVideoPlayerManager; // 视频管理器
-    private int mScrollState; // 滑动状态
+    private final VideoPlayerManager<MetaData> mVideoPlayerManager =
+            new SingleVideoPlayerManager(new PlayerItemChangeListener() {
+                @Override
+                public void onPlayerItemChanged(MetaData metaData) {
 
-    // 初始基本参数
-    public VideoListFragment() {
-        mList = new ArrayList<>();
-
-        mVisibilityCalculator = new SingleListViewItemActiveCalculator(
-                new DefaultSingleItemCalculatorCallback(), mList);
-
-        mVideoPlayerManager = new SingleVideoPlayerManager(new PlayerItemChangeListener() {
-            @Override
-            public void onPlayerItemChanged(MetaData metaData) {
-
-            }
-        });
-
-        mScrollState = AbsListView.OnScrollListener.SCROLL_STATE_IDLE;
-    }
+                }
+            }); // 视频管理器
+    private int mScrollState = AbsListView.OnScrollListener.SCROLL_STATE_IDLE; // 滑动状态
 
     @Nullable @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -92,8 +82,8 @@ public class VideoListFragment extends Fragment {
 
         VideoListAdapter adapter =
                 new VideoListAdapter(mVideoPlayerManager, getActivity(), mList);
-        mRvList.setAdapter(adapter);
 
+        mRvList.setAdapter(adapter);
         mRvList.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int scrollState) {
@@ -151,10 +141,10 @@ public class VideoListFragment extends Fragment {
     }
 
     private void initVideoList() {
-        mList.add(new VideoListItem(mVideoPlayerManager, NAMES[0], R.drawable.video_sample_1_pic, getFile(NAMES[0]), Picasso.with(getActivity())));
-        mList.add(new VideoListItem(mVideoPlayerManager, NAMES[1], R.drawable.video_sample_2_pic, getFile(NAMES[1]), Picasso.with(getActivity())));
-        mList.add(new VideoListItem(mVideoPlayerManager, NAMES[2], R.drawable.video_sample_1_pic, getFile(NAMES[2]), Picasso.with(getActivity())));
-        mList.add(new VideoListItem(mVideoPlayerManager, NAMES[3], R.drawable.video_sample_1_pic, getFile(NAMES[3]), Picasso.with(getActivity())));
+        mList.add(new VideoListItem(mVideoPlayerManager, NAMES[0], R.drawable.cover, getFile(NAMES[0]), Picasso.with(getActivity())));
+        mList.add(new VideoListItem(mVideoPlayerManager, NAMES[1], R.drawable.cover, getFile(NAMES[1]), Picasso.with(getActivity())));
+        mList.add(new VideoListItem(mVideoPlayerManager, NAMES[2], R.drawable.cover, getFile(NAMES[2]), Picasso.with(getActivity())));
+        mList.add(new VideoListItem(mVideoPlayerManager, NAMES[3], R.drawable.cover, getFile(NAMES[3]), Picasso.with(getActivity())));
     }
 
     private AssetFileDescriptor getFile(String name) {

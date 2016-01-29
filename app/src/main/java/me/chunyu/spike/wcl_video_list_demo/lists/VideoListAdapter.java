@@ -37,7 +37,8 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.Vide
 
     @Override
     public VideoListAdapter.VideoViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = VideoListItem.createView(parent,
+        VideoListItem videoItem = mList.get(viewType);
+        View view = videoItem.createView(parent,
                 mContext.getResources().getDisplayMetrics().widthPixels);
         return new VideoViewHolder(view);
     }
