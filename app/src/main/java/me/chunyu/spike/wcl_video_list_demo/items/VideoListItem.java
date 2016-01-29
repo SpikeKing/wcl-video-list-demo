@@ -1,24 +1,17 @@
 package me.chunyu.spike.wcl_video_list_demo.items;
 
-import android.content.Context;
 import android.content.res.AssetFileDescriptor;
 import android.graphics.Rect;
 import android.support.annotation.DrawableRes;
-import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
-import com.squareup.picasso.Picasso;
 import com.volokh.danylo.video_player_manager.manager.VideoItem;
 import com.volokh.danylo.video_player_manager.manager.VideoPlayerManager;
 import com.volokh.danylo.video_player_manager.meta.CurrentItemMetaData;
 import com.volokh.danylo.video_player_manager.meta.MetaData;
-import com.volokh.danylo.video_player_manager.ui.MediaPlayerWrapper;
 import com.volokh.danylo.video_player_manager.ui.VideoPlayerView;
 import com.volokh.danylo.visibility_utils.items.ListItem;
 
-import me.chunyu.spike.wcl_video_list_demo.R;
 import me.chunyu.spike.wcl_video_list_demo.lists.VideoListAdapter;
 
 /**
@@ -115,46 +108,5 @@ public class VideoListItem implements VideoItem, ListItem {
     // 底部出现
     private boolean viewIsPartiallyHiddenBottom(int height) {
         return mCurrentViewRect.bottom > 0 && mCurrentViewRect.bottom < height;
-    }
-
-    public static View createView(ViewGroup parent, int screenWidth) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_video, parent, false);
-        ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
-        layoutParams.height = screenWidth;
-
-        final VideoListAdapter.VideoViewHolder videoViewHolder =
-                new VideoListAdapter.VideoViewHolder(view);
-        view.setTag(videoViewHolder);
-
-        videoViewHolder.getVpvPlayer().addMediaPlayerListener(new MediaPlayerWrapper.MainThreadMediaPlayerListener() {
-            @Override
-            public void onVideoSizeChangedMainThread(int width, int height) {
-            }
-
-            @Override
-            public void onVideoPreparedMainThread() {
-                // When video is prepared it's about to start playback. So we hide the cover
-                videoViewHolder.getIvCover().setVisibility(View.INVISIBLE);
-            }
-
-            @Override
-            public void onVideoCompletionMainThread() {
-            }
-
-            @Override
-            public void onErrorMainThread(int what, int extra) {
-            }
-
-            @Override
-            public void onBufferingUpdateMainThread(int percent) {
-            }
-
-            @Override
-            public void onVideoStoppedMainThread() {
-                // Show the cover when video stopped
-                videoViewHolder.getIvCover().setVisibility(View.VISIBLE);
-            }
-        });
-        return view;
     }
 }

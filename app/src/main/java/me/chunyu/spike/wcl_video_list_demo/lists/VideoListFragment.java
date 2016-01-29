@@ -156,6 +156,14 @@ public class VideoListFragment extends Fragment {
         mList.add(new VideoListItem(mVideoPlayerManager, NAMES[1], R.drawable.cover, getFile(NAMES[1])));
         mList.add(new VideoListItem(mVideoPlayerManager, NAMES[2], R.drawable.cover, getFile(NAMES[2])));
         mList.add(new VideoListItem(mVideoPlayerManager, NAMES[3], R.drawable.cover, getFile(NAMES[3])));
+        mList.add(new VideoListItem(mVideoPlayerManager, NAMES[0], R.drawable.cover, getFile(NAMES[0])));
+        mList.add(new VideoListItem(mVideoPlayerManager, NAMES[1], R.drawable.cover, getFile(NAMES[1])));
+        mList.add(new VideoListItem(mVideoPlayerManager, NAMES[2], R.drawable.cover, getFile(NAMES[2])));
+        mList.add(new VideoListItem(mVideoPlayerManager, NAMES[3], R.drawable.cover, getFile(NAMES[3])));
+        mList.add(new VideoListItem(mVideoPlayerManager, NAMES[0], R.drawable.cover, getFile(NAMES[0])));
+        mList.add(new VideoListItem(mVideoPlayerManager, NAMES[1], R.drawable.cover, getFile(NAMES[1])));
+        mList.add(new VideoListItem(mVideoPlayerManager, NAMES[2], R.drawable.cover, getFile(NAMES[2])));
+        mList.add(new VideoListItem(mVideoPlayerManager, NAMES[3], R.drawable.cover, getFile(NAMES[3])));
     }
 
     private AssetFileDescriptor getFile(String name) {
