@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
 import com.volokh.danylo.video_player_manager.manager.VideoPlayerManager;
 import com.volokh.danylo.video_player_manager.ui.VideoPlayerView;
 
@@ -24,28 +25,23 @@ import me.chunyu.spike.wcl_video_list_demo.items.VideoListItem;
  */
 public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.VideoViewHolder> {
 
-    private final VideoPlayerManager mVideoPlayerManager; // 视频播放器管理器
     private final List<VideoListItem> mList; // 视频项列表
-    private Context mContext;
 
     // 构造器
-    public VideoListAdapter(VideoPlayerManager videoPlayerManager, Context context, List<VideoListItem> list) {
-        mVideoPlayerManager = videoPlayerManager;
-        mContext = context;
+    public VideoListAdapter(List<VideoListItem> list) {
         mList = list;
     }
 
     @Override
     public VideoListAdapter.VideoViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        VideoListItem videoItem = mList.get(viewType);
-        View view = videoItem.createView(parent,
-                mContext.getResources().getDisplayMetrics().widthPixels);
+        View view = VideoListItem.createView(parent,
+                parent.getContext().getResources().getDisplayMetrics().widthPixels);
         return new VideoViewHolder(view);
     }
 
     @Override public void onBindViewHolder(VideoListAdapter.VideoViewHolder holder, int position) {
         VideoListItem videoItem = mList.get(position);
-        videoItem.update(position, holder, mVideoPlayerManager);
+        holder.bindTo(videoItem);
     }
 
     @Override public int getItemCount() {
@@ -58,9 +54,19 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.Vide
         @Bind(R.id.item_video_tv_title) TextView mTvTitle; // 标题
         @Bind(R.id.item_video_tv_percents) TextView mTvPercents; // 百分比
 
+        private Context mContext;
+
         public VideoViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+
+            mContext = itemView.getContext().getApplicationContext();
+        }
+
+        public void bindTo(VideoListItem vli) {
+            mTvTitle.setText(vli.getTitle());
+            mIvCover.setVisibility(View.VISIBLE);
+            Picasso.with(mContext).load(vli.getImageResource()).into(mIvCover);
         }
 
         // 返回播放器
@@ -76,10 +82,6 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.Vide
         // 返回覆盖图片
         public ImageView getIvCover() {
             return mIvCover;
-        }
-
-        public TextView getTvTitle() {
-            return mTvTitle;
         }
     }
 }

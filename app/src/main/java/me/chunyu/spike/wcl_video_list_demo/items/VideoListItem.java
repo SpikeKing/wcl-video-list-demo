@@ -1,5 +1,6 @@
 package me.chunyu.spike.wcl_video_list_demo.items;
 
+import android.content.Context;
 import android.content.res.AssetFileDescriptor;
 import android.graphics.Rect;
 import android.support.annotation.DrawableRes;
@@ -33,36 +34,32 @@ public class VideoListItem implements VideoItem, ListItem {
     private final String mTitle; // 标题
     @DrawableRes private final int mImageResource; // 图片资源
     private final AssetFileDescriptor mAssetFileDescriptor; // 资源文件描述
-    private final Picasso mImageLoader;
 
     // 构造器, 输入视频播放管理器
     public VideoListItem(
             VideoPlayerManager<MetaData> videoPlayerManager,
             String title,
             @DrawableRes int imageResource,
-            AssetFileDescriptor assetFileDescriptor,
-            Picasso imageLoader
+            AssetFileDescriptor assetFileDescriptor
     ) {
         mVideoPlayerManager = videoPlayerManager;
 
         mTitle = title;
         mAssetFileDescriptor = assetFileDescriptor;
-        mImageLoader = imageLoader;
         mImageResource = imageResource;
     }
 
-    public void update(int position, final VideoListAdapter.VideoViewHolder viewHolder, VideoPlayerManager videoPlayerManager) {
-        viewHolder.getTvTitle().setText(mTitle);
-        viewHolder.getIvCover().setVisibility(View.VISIBLE);
-        mImageLoader.load(mImageResource).into(viewHolder.getIvCover());
+    // 视频项的标题
+    public String getTitle() {
+        return mTitle;
     }
 
-    /**
-     * This method needs to be called when created/recycled view is updated.
-     * Call it in
-     * 1. {@link android.widget.ListAdapter#getView(int, View, ViewGroup)}
-     * 2. {@link android.support.v7.widget.RecyclerView.Adapter#onBindViewHolder(RecyclerView.ViewHolder, int)}
-     */
+    // 视频项的背景
+    public int getImageResource() {
+        return mImageResource;
+    }
+
+    // 显示可视的百分比程度
     @Override public int getVisibilityPercents(View view) {
         int percents = 100;
 
@@ -93,9 +90,9 @@ public class VideoListItem implements VideoItem, ListItem {
     }
 
     @Override
-    public void playNewVideo(MetaData currentItemMetaData, VideoPlayerView player, VideoPlayerManager<MetaData> videoPlayerManager) {
-        String url = "http://dn-chunyu.qbox.me/fwb/static/images/home/video/video_aboutCY_A.mp4";
-        videoPlayerManager.playNewVideo(currentItemMetaData, player, url);
+    public void playNewVideo(MetaData currentItemMetaData, VideoPlayerView player,
+                             VideoPlayerManager<MetaData> videoPlayerManager) {
+        videoPlayerManager.playNewVideo(currentItemMetaData, player, mAssetFileDescriptor);
     }
 
     @Override public void stopPlayback(VideoPlayerManager videoPlayerManager) {
@@ -106,7 +103,7 @@ public class VideoListItem implements VideoItem, ListItem {
     private void setVisibilityPercentsText(View currentView, int percents) {
         VideoListAdapter.VideoViewHolder vh =
                 (VideoListAdapter.VideoViewHolder) currentView.getTag();
-        String percentsText = "Visibility percents: " + String.valueOf(percents);
+        String percentsText = "可视百分比: " + String.valueOf(percents);
         vh.getTvPercents().setText(percentsText);
     }
 
@@ -118,11 +115,6 @@ public class VideoListItem implements VideoItem, ListItem {
     // 底部出现
     private boolean viewIsPartiallyHiddenBottom(int height) {
         return mCurrentViewRect.bottom > 0 && mCurrentViewRect.bottom < height;
-    }
-
-    @Override
-    public String toString() {
-        return getClass() + ", mTitle[" + mTitle + "]";
     }
 
     public static View createView(ViewGroup parent, int screenWidth) {
