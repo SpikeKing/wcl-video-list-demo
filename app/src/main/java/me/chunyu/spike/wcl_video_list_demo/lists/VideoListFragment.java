@@ -91,8 +91,7 @@ public class VideoListFragment extends Fragment {
 
     @Nullable @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = LayoutInflater.from(getActivity())
-                .inflate(R.layout.fragment_video_list, container, false);
+        View view = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_video_list, container, false);
         ButterKnife.bind(this, view);
         return view;
     }

@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
 
-        item.setChecked(!item.isChecked());
+        item.setChecked(!item.isChecked()); // 改变视频选中状态
 
         return true;
     }
