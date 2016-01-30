@@ -1,6 +1,5 @@
 package me.chunyu.spike.wcl_video_list_demo.items;
 
-import android.content.res.AssetFileDescriptor;
 import android.graphics.Rect;
 import android.support.annotation.DrawableRes;
 import android.view.View;
@@ -9,7 +8,6 @@ import com.volokh.danylo.video_player_manager.manager.VideoItem;
 import com.volokh.danylo.video_player_manager.manager.VideoPlayerManager;
 import com.volokh.danylo.video_player_manager.meta.CurrentItemMetaData;
 import com.volokh.danylo.video_player_manager.meta.MetaData;
-import com.volokh.danylo.video_player_manager.ui.VideoPlayerView;
 import com.volokh.danylo.visibility_utils.items.ListItem;
 
 import me.chunyu.spike.wcl_video_list_demo.lists.VideoListAdapter;
@@ -19,27 +17,23 @@ import me.chunyu.spike.wcl_video_list_demo.lists.VideoListAdapter;
  * <p/>
  * Created by wangchenlong on 16/1/27.
  */
-public class VideoListItem implements VideoItem, ListItem {
+public abstract class VideoListItem implements VideoItem, ListItem {
 
-    private final Rect mCurrentViewRect = new Rect(); // 当前视图的方框
+    private final Rect mCurrentViewRect; // 当前视图的方框
     private final VideoPlayerManager<MetaData> mVideoPlayerManager; // 视频播放管理器
-
     private final String mTitle; // 标题
     @DrawableRes private final int mImageResource; // 图片资源
-    private final AssetFileDescriptor mAssetFileDescriptor; // 资源文件描述
 
     // 构造器, 输入视频播放管理器
     public VideoListItem(
             VideoPlayerManager<MetaData> videoPlayerManager,
             String title,
-            @DrawableRes int imageResource,
-            AssetFileDescriptor assetFileDescriptor
-    ) {
+            @DrawableRes int imageResource) {
         mVideoPlayerManager = videoPlayerManager;
-
         mTitle = title;
-        mAssetFileDescriptor = assetFileDescriptor;
         mImageResource = imageResource;
+
+        mCurrentViewRect = new Rect();
     }
 
     // 视频项的标题
@@ -80,12 +74,6 @@ public class VideoListItem implements VideoItem, ListItem {
 
     @Override public void deactivate(View currentView, int position) {
         stopPlayback(mVideoPlayerManager);
-    }
-
-    @Override
-    public void playNewVideo(MetaData currentItemMetaData, VideoPlayerView player,
-                             VideoPlayerManager<MetaData> videoPlayerManager) {
-        videoPlayerManager.playNewVideo(currentItemMetaData, player, mAssetFileDescriptor);
     }
 
     @Override public void stopPlayback(VideoPlayerManager videoPlayerManager) {

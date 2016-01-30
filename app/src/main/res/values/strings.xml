@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">wcl-video-list-demo</string>
+    <string name="menu_local_video">本地视频</string>
+    <string name="menu_online_video">在线视频</string>
 </resources>

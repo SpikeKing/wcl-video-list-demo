@@ -26,27 +26,35 @@ import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import me.chunyu.spike.wcl_video_list_demo.MainActivity;
 import me.chunyu.spike.wcl_video_list_demo.R;
+import me.chunyu.spike.wcl_video_list_demo.items.LocalVideoListItem;
+import me.chunyu.spike.wcl_video_list_demo.items.OnlineVideoListItem;
 import me.chunyu.spike.wcl_video_list_demo.items.VideoListItem;
 
 /**
- * 视频列表视图
+ * 视频列表视图, 可以使用URL和本地文件.
  * <p/>
  * Created by wangchenlong on 16/1/27.
  */
 public class VideoListFragment extends Fragment {
+
+    public static final String VIDEO_TYPE_ARG = "me.chunyu.spike.video_list_fragment.video_type_arg";
 
     // 网络视频地址
     private static final String URL =
             "http://dn-chunyu.qbox.me/fwb/static/images/home/video/video_aboutCY_A.mp4";
 
     // 本地资源文件名
-    private static final String[] NAMES = new String[]{
-            "chunyu-1.mp4",
-            "chunyu-2.mp4",
-            "chunyu-3.mp4",
-            "chunyu-4.mp4"
+    private static final String[] LOCAL_NAMES = new String[]{
+            "chunyu-local-1.mp4",
+            "chunyu-local-2.mp4",
+            "chunyu-local-3.mp4",
+            "chunyu-local-4.mp4"
     };
+
+    // 在线资源名
+    private static final String ONLINE_NAME = "chunyu-online";
 
     @Bind(R.id.video_list_rv_list) RecyclerView mRvList; // 列表视图
 
@@ -57,6 +65,15 @@ public class VideoListFragment extends Fragment {
     private LinearLayoutManager mLayoutManager; // 布局管理器
     private ItemsPositionGetter mItemsPositionGetter; // 位置提取器
     private int mScrollState; // 滑动状态
+
+    // 创建实例, 添加类型
+    public static VideoListFragment newInstance(int type) {
+        VideoListFragment simpleFragment = new VideoListFragment();
+        Bundle args = new Bundle();
+        args.putInt(VIDEO_TYPE_ARG, type);
+        simpleFragment.setArguments(args);
+        return simpleFragment;
+    }
 
     // 构造器
     public VideoListFragment() {
@@ -83,7 +100,17 @@ public class VideoListFragment extends Fragment {
     @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        initLocalVideoList();
+        Bundle args = getArguments();
+        if (args != null) {
+            // 设置类型
+            if (args.getInt(VIDEO_TYPE_ARG) == MainActivity.LOCAL) {
+                initLocalVideoList();
+            } else {
+                initOnlineVideoList();
+            }
+        } else {
+            initLocalVideoList();
+        }
 
         mRvList.setHasFixedSize(true);
 
@@ -152,20 +179,29 @@ public class VideoListFragment extends Fragment {
 
     // 初始化本地视频
     private void initLocalVideoList() {
-        mList.add(new VideoListItem(mVideoPlayerManager, NAMES[0], R.drawable.cover, getFile(NAMES[0])));
-        mList.add(new VideoListItem(mVideoPlayerManager, NAMES[1], R.drawable.cover, getFile(NAMES[1])));
-        mList.add(new VideoListItem(mVideoPlayerManager, NAMES[2], R.drawable.cover, getFile(NAMES[2])));
-        mList.add(new VideoListItem(mVideoPlayerManager, NAMES[3], R.drawable.cover, getFile(NAMES[3])));
-        mList.add(new VideoListItem(mVideoPlayerManager, NAMES[0], R.drawable.cover, getFile(NAMES[0])));
-        mList.add(new VideoListItem(mVideoPlayerManager, NAMES[1], R.drawable.cover, getFile(NAMES[1])));
-        mList.add(new VideoListItem(mVideoPlayerManager, NAMES[2], R.drawable.cover, getFile(NAMES[2])));
-        mList.add(new VideoListItem(mVideoPlayerManager, NAMES[3], R.drawable.cover, getFile(NAMES[3])));
-        mList.add(new VideoListItem(mVideoPlayerManager, NAMES[0], R.drawable.cover, getFile(NAMES[0])));
-        mList.add(new VideoListItem(mVideoPlayerManager, NAMES[1], R.drawable.cover, getFile(NAMES[1])));
-        mList.add(new VideoListItem(mVideoPlayerManager, NAMES[2], R.drawable.cover, getFile(NAMES[2])));
-        mList.add(new VideoListItem(mVideoPlayerManager, NAMES[3], R.drawable.cover, getFile(NAMES[3])));
+        mList.add(new LocalVideoListItem(mVideoPlayerManager, LOCAL_NAMES[0], R.drawable.cover, getFile(LOCAL_NAMES[0])));
+        mList.add(new LocalVideoListItem(mVideoPlayerManager, LOCAL_NAMES[1], R.drawable.cover, getFile(LOCAL_NAMES[1])));
+        mList.add(new LocalVideoListItem(mVideoPlayerManager, LOCAL_NAMES[2], R.drawable.cover, getFile(LOCAL_NAMES[2])));
+        mList.add(new LocalVideoListItem(mVideoPlayerManager, LOCAL_NAMES[3], R.drawable.cover, getFile(LOCAL_NAMES[3])));
+        mList.add(new LocalVideoListItem(mVideoPlayerManager, LOCAL_NAMES[0], R.drawable.cover, getFile(LOCAL_NAMES[0])));
+        mList.add(new LocalVideoListItem(mVideoPlayerManager, LOCAL_NAMES[1], R.drawable.cover, getFile(LOCAL_NAMES[1])));
+        mList.add(new LocalVideoListItem(mVideoPlayerManager, LOCAL_NAMES[2], R.drawable.cover, getFile(LOCAL_NAMES[2])));
+        mList.add(new LocalVideoListItem(mVideoPlayerManager, LOCAL_NAMES[3], R.drawable.cover, getFile(LOCAL_NAMES[3])));
+        mList.add(new LocalVideoListItem(mVideoPlayerManager, LOCAL_NAMES[0], R.drawable.cover, getFile(LOCAL_NAMES[0])));
+        mList.add(new LocalVideoListItem(mVideoPlayerManager, LOCAL_NAMES[1], R.drawable.cover, getFile(LOCAL_NAMES[1])));
+        mList.add(new LocalVideoListItem(mVideoPlayerManager, LOCAL_NAMES[2], R.drawable.cover, getFile(LOCAL_NAMES[2])));
+        mList.add(new LocalVideoListItem(mVideoPlayerManager, LOCAL_NAMES[3], R.drawable.cover, getFile(LOCAL_NAMES[3])));
     }
 
+    // 初始化在线视频, 需要缓冲
+    private void initOnlineVideoList() {
+        final int count = 10;
+        for (int i = 0; i < count; ++i) {
+            mList.add(new OnlineVideoListItem(mVideoPlayerManager, ONLINE_NAME, R.drawable.cover, URL));
+        }
+    }
+
+    // 获取资源文件
     private AssetFileDescriptor getFile(String name) {
         try {
             return getActivity().getAssets().openFd(name);
