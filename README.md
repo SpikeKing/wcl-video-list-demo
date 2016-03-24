@@ -1,5 +1,7 @@
 # wcl-video-list-demo
-视频连续播放的示例
+实现类似朋友圈视频的滚动播放功能
+
+> 欢迎Follow我的[GitHub](https://github.com/SpikeKing)
 
 博客: http://www.wangchenlong.org/
 
