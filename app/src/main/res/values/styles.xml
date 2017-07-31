@@ -9,7 +9,7 @@
     </style>
 
     <style name="BaseActionBar" parent="ThemeOverlay.AppCompat.ActionBar">
-        <item name="android:textColorPrimary">@android:color/white</item>
+        <item name="android:textColorPrimary">@color/colorAccent</item>
     </style>
 
     <style name="BaseTextView">

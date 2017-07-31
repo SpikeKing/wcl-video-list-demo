@@ -78,7 +78,7 @@ public class VideoListFragment extends Fragment {
 
     // 构造器
     public VideoListFragment() {
-        mList = new ArrayList<>();
+        mList = new ArrayList<>(); // 视频的列表
         mVisibilityCalculator = new SingleListViewItemActiveCalculator(
                 new DefaultSingleItemCalculatorCallback(), mList);
         mVideoPlayerManager = new SingleVideoPlayerManager(new PlayerItemChangeListener() {
@@ -91,8 +91,10 @@ public class VideoListFragment extends Fragment {
     }
 
     @Nullable @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_video_list, container, false);
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
+        View view = LayoutInflater.from(getActivity())
+                .inflate(R.layout.fragment_video_list, container, false);
         ButterKnife.bind(this, view);
         return view;
     }
@@ -100,25 +102,16 @@ public class VideoListFragment extends Fragment {
     @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        initLocalVideoList();
         Bundle args = getArguments();
-        if (args != null) {
-            // 设置类型
-            if (args.getInt(VIDEO_TYPE_ARG) == MainActivity.LOCAL) {
-                initLocalVideoList();
-            } else {
-                initOnlineVideoList();
-            }
-        } else {
-            initLocalVideoList();
+        if (args != null && args.getInt(VIDEO_TYPE_ARG) == MainActivity.ONLINE) {
+            initOnlineVideoList();
         }
 
         mRvList.setHasFixedSize(true);
-
         mLayoutManager = new LinearLayoutManager(getActivity());
         mRvList.setLayoutManager(mLayoutManager);
-
         VideoListAdapter adapter = new VideoListAdapter(mList);
-
         mRvList.setAdapter(adapter);
 
         // 获取Item的位置

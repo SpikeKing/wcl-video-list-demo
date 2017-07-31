@@ -9,5 +9,4 @@
         android:id="@+id/video_list_rv_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
-
 </LinearLayout>
