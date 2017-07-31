@@ -1,4 +1,4 @@
-package me.chunyu.spike.wcl_video_list_demo;
+package org.wangchenlong.wcl_video_list_demo;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

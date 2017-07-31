@@ -1,4 +1,4 @@
-package me.chunyu.spike.wcl_video_list_demo.items;
+package org.wangchenlong.wcl_video_list_demo.items;
 
 import android.support.annotation.DrawableRes;
 

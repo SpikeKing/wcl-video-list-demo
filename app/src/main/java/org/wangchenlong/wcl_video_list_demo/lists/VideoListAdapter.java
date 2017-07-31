@@ -1,4 +1,4 @@
-package me.chunyu.spike.wcl_video_list_demo.lists;
+package org.wangchenlong.wcl_video_list_demo.lists;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -12,12 +12,13 @@ import com.squareup.picasso.Picasso;
 import com.volokh.danylo.video_player_manager.ui.MediaPlayerWrapper;
 import com.volokh.danylo.video_player_manager.ui.VideoPlayerView;
 
+import org.wangchenlong.wcl_video_list_demo.R;
+import org.wangchenlong.wcl_video_list_demo.items.VideoListItem;
+
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import me.chunyu.spike.wcl_video_list_demo.R;
-import me.chunyu.spike.wcl_video_list_demo.items.VideoListItem;
 
 /**
  * 视频列表的适配器

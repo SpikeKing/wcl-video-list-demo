@@ -1,4 +1,4 @@
-package me.chunyu.spike.wcl_video_list_demo.lists;
+package org.wangchenlong.wcl_video_list_demo.lists;
 
 import android.content.res.AssetFileDescriptor;
 import android.os.Bundle;
@@ -21,16 +21,17 @@ import com.volokh.danylo.visibility_utils.calculator.SingleListViewItemActiveCal
 import com.volokh.danylo.visibility_utils.scroll_utils.ItemsPositionGetter;
 import com.volokh.danylo.visibility_utils.scroll_utils.RecyclerViewItemPositionGetter;
 
+import org.wangchenlong.wcl_video_list_demo.MainActivity;
+import org.wangchenlong.wcl_video_list_demo.R;
+import org.wangchenlong.wcl_video_list_demo.items.LocalVideoListItem;
+import org.wangchenlong.wcl_video_list_demo.items.OnlineVideoListItem;
+import org.wangchenlong.wcl_video_list_demo.items.VideoListItem;
+
 import java.io.IOException;
 import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import me.chunyu.spike.wcl_video_list_demo.MainActivity;
-import me.chunyu.spike.wcl_video_list_demo.R;
-import me.chunyu.spike.wcl_video_list_demo.items.LocalVideoListItem;
-import me.chunyu.spike.wcl_video_list_demo.items.OnlineVideoListItem;
-import me.chunyu.spike.wcl_video_list_demo.items.VideoListItem;
 
 /**
  * 视频列表视图, 可以使用URL和本地文件.

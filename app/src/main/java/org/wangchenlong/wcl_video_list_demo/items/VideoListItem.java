@@ -1,4 +1,4 @@
-package me.chunyu.spike.wcl_video_list_demo.items;
+package org.wangchenlong.wcl_video_list_demo.items;
 
 import android.graphics.Rect;
 import android.support.annotation.DrawableRes;
@@ -10,7 +10,7 @@ import com.volokh.danylo.video_player_manager.meta.CurrentItemMetaData;
 import com.volokh.danylo.video_player_manager.meta.MetaData;
 import com.volokh.danylo.visibility_utils.items.ListItem;
 
-import me.chunyu.spike.wcl_video_list_demo.lists.VideoListAdapter;
+import org.wangchenlong.wcl_video_list_demo.lists.VideoListAdapter;
 
 /**
  * 基本视频项, 实现适配项和列表项

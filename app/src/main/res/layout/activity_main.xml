@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="me.chunyu.spike.wcl_video_list_demo.MainActivity">
+    tools:context="org.wangchenlong.wcl_video_list_demo.MainActivity">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/main_t_toolbar"
