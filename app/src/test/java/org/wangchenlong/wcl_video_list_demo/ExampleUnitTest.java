@@ -1,8 +1,8 @@
-package me.chunyu.spike.wcl_video_list_demo;
+package org.wangchenlong.wcl_video_list_demo;
 
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  * To work on unit tests, switch the Test Artifact in the Build Variants view.
