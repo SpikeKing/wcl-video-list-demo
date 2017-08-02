@@ -26,23 +26,18 @@ import butterknife.ButterKnife;
  * Created by wangchenlong on 16/1/27.
  */
 public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.VideoViewHolder> {
-
     private final List<VideoListItem> mList; // 视频项列表
 
-    // 构造器
     public VideoListAdapter(List<VideoListItem> list) {
-        mList = list;
+        mList = list; // 数据源
     }
 
     @Override
     public VideoListAdapter.VideoViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_video, parent, false);
-
-        // 必须要设置Tag, 否则无法显示
         VideoListAdapter.VideoViewHolder holder = new VideoListAdapter.VideoViewHolder(view);
-        view.setTag(holder);
-
-        return new VideoListAdapter.VideoViewHolder(view);
+        view.setTag(holder); // 设置Tag，在视频播放时使用，优化加载速度
+        return holder;
     }
 
     @Override

@@ -18,17 +18,14 @@ import org.wangchenlong.wcl_video_list_demo.lists.VideoListAdapter;
  * Created by wangchenlong on 16/1/27.
  */
 public abstract class VideoListItem implements VideoItem, ListItem {
-
     private final Rect mCurrentViewRect; // 当前视图的方框
     private final VideoPlayerManager<MetaData> mVideoPlayerManager; // 视频播放管理器
     private final String mTitle; // 标题
     @DrawableRes private final int mImageResource; // 图片资源
 
     // 构造器, 输入视频播放管理器
-    public VideoListItem(
-            VideoPlayerManager<MetaData> videoPlayerManager,
-            String title,
-            @DrawableRes int imageResource) {
+    public VideoListItem(VideoPlayerManager<MetaData> videoPlayerManager, String title,
+                         @DrawableRes int imageResource) {
         mVideoPlayerManager = videoPlayerManager;
         mTitle = title;
         mImageResource = imageResource;
@@ -36,20 +33,17 @@ public abstract class VideoListItem implements VideoItem, ListItem {
         mCurrentViewRect = new Rect();
     }
 
-    // 视频项的标题
-    public String getTitle() {
+    public String getTitle() {  // 视频项的标题
         return mTitle;
     }
 
-    // 视频项的背景
-    public int getImageResource() {
+    public int getImageResource() { // 视频项的背景
         return mImageResource;
     }
 
-    // 显示可视的百分比程度
-    @Override public int getVisibilityPercents(View view) {
-        int percents = 100;
 
+    @Override public int getVisibilityPercents(View view) { // 显示可视的百分比程度
+        int percents = 100;
         view.getLocalVisibleRect(mCurrentViewRect);
         int height = view.getHeight();
 
@@ -58,7 +52,6 @@ public abstract class VideoListItem implements VideoItem, ListItem {
         } else if (viewIsPartiallyHiddenBottom(height)) {
             percents = mCurrentViewRect.bottom * 100 / height;
         }
-
         // 设置百分比
         setVisibilityPercentsText(view, percents);
 
